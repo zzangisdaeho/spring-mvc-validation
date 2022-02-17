@@ -54,6 +54,15 @@ public class ValidationItemControllerV2 {
         return "validation/v2/addForm";
     }
 
+    /**
+     * BindingResult가 객체다음에 오면 해당 객체에서 binding 오류가 발생해도 에러페이지로 넘어가지 않고,
+     * 에러발생사항을 BindingResult에 기록하고 컨트롤러 로직이 진행된다.
+     * @param item
+     * @param bindingResult
+     * @param redirectAttributes
+     * @param model
+     * @return
+     */
 //    @PostMapping("/add")
     public String addItemV1(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
