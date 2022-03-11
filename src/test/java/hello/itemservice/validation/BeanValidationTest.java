@@ -21,6 +21,7 @@ public class BeanValidationTest {
         item.setPrice(0);
         item.setQuantity(10000);
 
+        // validate에서 group 호출 가능
         Set<ConstraintViolation<Item>> violations = validator.validate(item);
         for (ConstraintViolation<Item> violation : violations) {
             System.out.println("violation = " + violation);
