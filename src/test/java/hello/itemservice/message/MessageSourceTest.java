@@ -1,12 +1,16 @@
 package hello.itemservice.message;
 
+import hello.itemservice.domain.item.Item;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.Locale;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -16,9 +20,18 @@ public class MessageSourceTest {
     @Autowired
     MessageSource ms;
 
+    @Autowired
+    Validator validator;
+
     @Test
     void helloMessage() {
-        String result = ms.getMessage("hello", null, null);
+        String result = ms.getMessage("hello", null, Locale.KOREAN);
+        assertThat(result).isEqualTo("안녕");
+    }
+
+    @Test
+    void helloMessage2() {
+        String result = ms.getMessage("required", null, Locale.KOREAN);
         assertThat(result).isEqualTo("안녕");
     }
 
@@ -49,5 +62,21 @@ public class MessageSourceTest {
     @Test
     void enLang() {
         assertThat(ms.getMessage("hello", null, Locale.ENGLISH)).isEqualTo("hello");
+    }
+
+    @Test
+    void validationTest(){
+
+        Item item = new Item();
+        item.setItemName(" ");
+        item.setPrice(0);
+        item.setQuantity(10000);
+
+        Set<ConstraintViolation<Item>> violations = validator.validate(item);
+        for (ConstraintViolation<Item> violation : violations) {
+            System.out.println("violation = " + violation);
+            System.out.println("violation = " + violation.getMessage());
+        }
+
     }
 }
