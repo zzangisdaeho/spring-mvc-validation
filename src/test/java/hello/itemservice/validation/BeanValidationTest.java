@@ -26,7 +26,7 @@ public class BeanValidationTest {
         Set<ConstraintViolation<Item>> violations = validator.validate(item);
         for (ConstraintViolation<Item> violation : violations) {
             System.out.println("violation = " + violation);
-            System.out.println("violation = " + violation.getMessage());
+            System.out.println("violation.message = " + violation.getMessage());
         }
     }
 
